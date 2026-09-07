@@ -13,7 +13,7 @@ import com.smart.assistant.data.local.entity.SettingsEntity
 
 @Database(
     entities = [CustomerEntity::class, ProductEntity::class, SettingsEntity::class],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
