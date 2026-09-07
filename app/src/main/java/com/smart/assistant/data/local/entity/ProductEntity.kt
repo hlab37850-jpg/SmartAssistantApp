@@ -9,6 +9,6 @@ data class ProductEntity(
     val name: String,
     val category: String,
     val quantity: Int,
-    val unit: String,
+    val unit: String = "قطعة",
     val minQuantity: Int = 5
 )
