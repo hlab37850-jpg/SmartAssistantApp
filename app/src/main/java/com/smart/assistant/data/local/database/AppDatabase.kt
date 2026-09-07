@@ -1,4 +1,4 @@
-package com.smart.assistant/data/local/database
+package com.smart.assistant.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
