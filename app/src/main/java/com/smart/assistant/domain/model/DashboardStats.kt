@@ -1,4 +1,4 @@
-package com.smart/assistant/domain/model
+package com.smart.assistant/domain/model
 
 data class DashboardStats(
     val totalCustomers: Int = 0,

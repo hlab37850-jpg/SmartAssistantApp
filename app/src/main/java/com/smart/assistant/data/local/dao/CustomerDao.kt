@@ -1,4 +1,4 @@
-package com.smart/assistant/data/local/dao
+package com.smart.assistant/data/local/dao
 
 import androidx.room.*
 import com.smart.assistant.data.local.entity.CustomerEntity
