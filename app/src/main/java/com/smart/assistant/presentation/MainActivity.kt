@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.smart.assistant.data.local.entity.CustomerEntity
 import com.smart.assistant.data.local.entity.ProductEntity
-import com.smart.assistant.presentation.ui.theme.*
 
 enum class Screen(val title: String, val icon: ImageVector) {
     DASHBOARD("الرئيسية", Icons.Default.Home),
