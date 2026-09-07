@@ -20,12 +20,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.smart.assistant.data.local.entity.CustomerEntity
 import com.smart.assistant.data.local.entity.ProductEntity
-import com.smart.assistant.data.local.entity.ShopSettingsEntity
 
 enum class Screen(val title: String, val icon: ImageVector) {
     DASHBOARD("الرئيسية", Icons.Default.Home),
     CUSTOMERS("العملاء", Icons.Default.Person),
-    INVENTORY("المخزون", Icons.Default.ShoppingCart),
+    INVENTORY("المخزون", Icons.Default.List),
     SETTINGS("الإعدادات", Icons.Default.Settings)
 }
 
@@ -139,10 +138,10 @@ fun CustomerContent(viewModel: MainViewModel) {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/${customer.phone}?text=${Uri.encode(msg)}"))
                                 context.startActivity(intent)
                             }) {
-                                Icon(Icons.Default.Send, contentDescription = "واتساب")
+                                Icon(Icons.Default.Share, contentDescription = "واتساب")
                             }
                             IconButton(onClick = { viewModel.deleteCustomer(customer) }) {
-                                Icon(Icons.Default.Delete, contentDescription = "حذف")
+                                Icon(Icons.Default.Clear, contentDescription = "حذف")
                             }
                         }
                     }
@@ -219,7 +218,7 @@ fun InventoryContent(viewModel: MainViewModel) {
                             Spacer(modifier = Modifier.width(4.dp))
                             Button(onClick = { viewModel.updateProductQuantity(product, -1) }) { Text("-") }
                             IconButton(onClick = { viewModel.deleteProduct(product) }) {
-                                Icon(Icons.Default.Delete, contentDescription = "حذف")
+                                Icon(Icons.Default.Clear, contentDescription = "حذف")
                             }
                         }
                     }
