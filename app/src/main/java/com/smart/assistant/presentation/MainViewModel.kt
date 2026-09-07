@@ -38,7 +38,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addProduct(name: String, category: String, quantity: Double, unit: String, price: Double) {
         viewModelScope.launch {
-            db.productDao().insertProduct(ProductEntity(name = name, category = category, quantity = quantity, unit = unit, price = price))
+            db.productDao().insertProduct(
+                ProductEntity(name = name, category = category, quantity = quantity, unit = unit, price = price)
+            )
         }
     }
 
@@ -54,9 +56,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun saveSettings(storeName: String, ownerName: String, phone: String, address: String) {
+    fun saveSettings(
+        shopName: String,
+        ownerName: String,
+        phone: String,
+        whatsapp: String,
+        address: String,
+        reminderMessageTemplate: String
+    ) {
         viewModelScope.launch {
-            db.settingsDao().saveSettings(SettingsEntity(id = 1, storeName = storeName, ownerName = ownerName, phone = phone, address = address))
+            db.settingsDao().saveSettings(
+                SettingsEntity(
+                    id = 1,
+                    storeName = shopName,
+                    shopName = shopName,
+                    ownerName = ownerName,
+                    phone = phone,
+                    whatsapp = whatsapp,
+                    address = address,
+                    reminderMessageTemplate = reminderMessageTemplate
+                )
+            )
         }
     }
 }
