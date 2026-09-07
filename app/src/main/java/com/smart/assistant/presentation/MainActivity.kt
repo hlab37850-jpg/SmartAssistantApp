@@ -24,8 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.smart.assistant.data.local.entity.CustomerEntity
-import com.smart.assistant.data.local.entity.ProductEntity
 
 enum class Screen(val title: String, val icon: ImageVector) {
     DASHBOARD("الرئيسية", Icons.Default.Home),
@@ -35,7 +33,9 @@ enum class Screen(val title: String, val icon: ImageVector) {
 }
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels {
+        MainViewModelFactory(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
