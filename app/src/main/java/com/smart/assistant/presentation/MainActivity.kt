@@ -11,9 +11,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.smart.assistant.data.entity.CustomerEntity
-import com.smart.assistant.data.entity.ProductEntity
-import com.smart.assistant.data.entity.SettingsEntity
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -50,12 +47,12 @@ fun MainScreen(viewModel: MainViewModel) {
     var productUnit by remember { mutableStateOf("") }
     var productPrice by remember { mutableStateOf("") }
 
-    var shopName by remember { mutableStateOf(settings?.shopName ?: "") }
-    var ownerName by remember { mutableStateOf(settings?.ownerName ?: "") }
-    var phone by remember { mutableStateOf(settings?.phone ?: "") }
-    var whatsapp by remember { mutableStateOf(settings?.whatsapp ?: "") }
-    var address by remember { mutableStateOf(settings?.address ?: "") }
-    var reminderMessageTemplate by remember { mutableStateOf(settings?.reminderMessageTemplate ?: "") }
+    var shopName by remember { mutableStateOf("") }
+    var ownerName by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
+    var whatsapp by remember { mutableStateOf("") }
+    var address by remember { mutableStateOf("") }
+    var reminderMessageTemplate by remember { mutableStateOf("") }
 
     LaunchedEffect(settings) {
         settings?.let {
@@ -77,19 +74,19 @@ fun MainScreen(viewModel: MainViewModel) {
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
-                    icon = { Text("العملاء") },
+                    icon = { Text("👥") },
                     label = { Text("العملاء") },
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 }
                 )
                 NavigationBarItem(
-                    icon = { Text("المخزن") },
+                    icon = { Text("📦") },
                     label = { Text("المخزن") },
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 }
                 )
                 NavigationBarItem(
-                    icon = { Text("الإعدادات") },
+                    icon = { Text("⚙️") },
                     label = { Text("الإعدادات") },
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 }
@@ -134,7 +131,7 @@ fun MainScreen(viewModel: MainViewModel) {
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("إضافة عميل")
+                            Text("إضافة عميل جديد")
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -186,7 +183,7 @@ fun MainScreen(viewModel: MainViewModel) {
                         OutlinedTextField(
                             value = productUnit,
                             onValueChange = { productUnit = it },
-                            label = { Text("الوحدة (حبة، كيس، متر...)") },
+                            label = { Text("الوحدة (حبة، كيس...)") },
                             modifier = Modifier.fillMaxWidth()
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -221,7 +218,7 @@ fun MainScreen(viewModel: MainViewModel) {
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                                 ) {
                                     Row(
-                                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp, horizontal = 12.dp),
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
                                         Column {
