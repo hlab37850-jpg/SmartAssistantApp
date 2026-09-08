@@ -10,5 +10,5 @@ interface SettingsDao {
     fun getSettings(): Flow<SettingsEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveSettings(settings: SettingsEntity)
+    suspend fun insertOrUpdateSettings(settings: SettingsEntity)
 }

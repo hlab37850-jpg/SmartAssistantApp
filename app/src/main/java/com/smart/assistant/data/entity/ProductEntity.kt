@@ -10,5 +10,5 @@ data class ProductEntity(
     val category: String,
     val quantity: Double,
     val unit: String,
-    val price: Double = 0.0
+    val price: Double
 )

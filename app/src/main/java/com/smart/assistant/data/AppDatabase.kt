@@ -7,22 +7,14 @@ import androidx.room.RoomDatabase
 import com.smart.assistant.data.dao.CustomerDao
 import com.smart.assistant.data.dao.ProductDao
 import com.smart.assistant.data.dao.SettingsDao
-import com.smart.assistant.data.dao.TransactionDao
 import com.smart.assistant.data.entity.CustomerEntity
 import com.smart.assistant.data.entity.ProductEntity
 import com.smart.assistant.data.entity.SettingsEntity
-import com.smart.assistant.data.entity.TransactionEntity
 
-@Database(
-    entities = [CustomerEntity::class, ProductEntity::class, TransactionEntity::class, SettingsEntity::class],
-    version = 2,
-    exportSchema = false
-)
+@Database(entities = [CustomerEntity::class, ProductEntity::class, SettingsEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun customerDao(): CustomerDao
     abstract fun productDao(): ProductDao
-    abstract fun transactionDao(): TransactionDao
     abstract fun settingsDao(): SettingsDao
 
     companion object {
@@ -34,10 +26,8 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "smart_assistant_db"
-                )
-                .fallbackToDestructiveMigration()
-                .build()
+                    "smart_assistant_database"
+                ).build()
                 INSTANCE = instance
                 instance
             }
