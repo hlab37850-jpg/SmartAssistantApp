@@ -13,62 +13,49 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    private val db = AppDatabase.getDatabase(application)
+    private val database = AppDatabase.getDatabase(application)
+    private val customerDao = database.customerDao()
+    private val productDao = database.productDao()
+    private val settingsDao = database.settingsDao()
 
-    val customers: StateFlow<List<CustomerEntity>> = db.customerDao().getAllCustomers()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val customers: StateFlow<List<CustomerEntity>> = customerDao.getAllCustomers()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    val products: StateFlow<List<ProductEntity>> = db.productDao().getAllProducts()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val products: StateFlow<List<ProductEntity>> = productDao.getAllProducts()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    val settings: StateFlow<SettingsEntity?> = db.settingsDao().getSettings()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+    val settings: StateFlow<SettingsEntity?> = settingsDao.getSettings()
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun addCustomer(name: String, phone: String, balance: Double) {
         viewModelScope.launch {
-            db.customerDao().insertCustomer(CustomerEntity(name = name, phone = phone, balance = balance))
+            customerDao.insertCustomer(CustomerEntity(name = name, phone = phone, balance = balance))
         }
     }
 
     fun deleteCustomer(customer: CustomerEntity) {
         viewModelScope.launch {
-            db.customerDao().deleteCustomer(customer)
+            customerDao.deleteCustomer(customer)
         }
     }
 
     fun addProduct(name: String, category: String, quantity: Double, unit: String, price: Double) {
         viewModelScope.launch {
-            db.productDao().insertProduct(
-                ProductEntity(name = name, category = category, quantity = quantity, unit = unit, price = price)
-            )
-        }
-    }
-
-    fun updateProductQuantity(productId: Long, newQuantity: Double) {
-        viewModelScope.launch {
-            db.productDao().updateQuantity(productId, newQuantity)
+            productDao.insertProduct(ProductEntity(name = name, category = category, quantity = quantity, unit = unit, price = price))
         }
     }
 
     fun deleteProduct(product: ProductEntity) {
         viewModelScope.launch {
-            db.productDao().deleteProduct(product)
+            productDao.deleteProduct(product)
         }
     }
 
-    fun saveSettings(
-        shopName: String,
-        ownerName: String,
-        phone: String,
-        whatsapp: String,
-        address: String,
-        reminderMessageTemplate: String
-    ) {
+    fun saveSettings(shopName: String, ownerName: String, phone: String, whatsapp: String, address: String, reminderMessageTemplate: String) {
         viewModelScope.launch {
-            db.settingsDao().saveSettings(
-                SettingsEntity(
-                    id = 1,
-                    storeName = shopName,
+            val current = settings.value ?: SettingsEntity()
+            settingsDao.insertOrUpdateSettings(
+                current.copy(
                     shopName = shopName,
                     ownerName = ownerName,
                     phone = phone,
